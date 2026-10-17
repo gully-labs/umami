@@ -2834,6 +2834,47 @@ export const operations = {
     ],
     hasBody: false,
   },
+  getWebsitesWebsiteIdWeb3: {
+    operationId: 'getWebsitesWebsiteIdWeb3',
+    method: 'get',
+    path: '/api/websites/{websiteId}/web3',
+    pathParams: ['websiteId'],
+    queryParams: [
+      'startAt',
+      'endAt',
+      'startDate',
+      'endDate',
+      'timezone',
+      'unit',
+      'compare',
+      'path',
+      'referrer',
+      'title',
+      'query',
+      'os',
+      'browser',
+      'device',
+      'country',
+      'region',
+      'city',
+      'tag',
+      'hostname',
+      'distinctId',
+      'language',
+      'event',
+      'utmSource',
+      'utmMedium',
+      'utmCampaign',
+      'utmContent',
+      'utmTerm',
+      'excludeBounce',
+      'segment',
+      'cohort',
+      'eventType',
+      'match',
+    ],
+    hasBody: false,
+  },
   getWebsiteUtmMetrics: {
     operationId: 'getWebsiteUtmMetrics',
     method: 'get',
@@ -4783,6 +4824,17 @@ export abstract class GeneratedUmamiClient {
     options?: RequestOptions,
   ): Promise<OperationOutput<'getWebsiteStats'>> {
     return this.execute('getWebsiteStats', input, options);
+  }
+
+  /**
+   * Get websites website id web3
+   * `GET /api/websites/{websiteId}/web3`
+   */
+  getWebsitesWebsiteIdWeb3(
+    input: OperationInput<'getWebsitesWebsiteIdWeb3'>,
+    options?: RequestOptions,
+  ): Promise<OperationOutput<'getWebsitesWebsiteIdWeb3'>> {
+    return this.execute('getWebsitesWebsiteIdWeb3', input, options);
   }
 
   /**

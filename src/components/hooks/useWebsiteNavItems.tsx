@@ -9,6 +9,7 @@ import {
   User,
   UserPlus,
   Video,
+  Wallet,
 } from '@/components/icons';
 import { Funnel, Gauge, Lightning, Magnet, Money, Network, Path, Target } from '@/components/svg';
 import { useMessages } from './useMessages';
@@ -47,6 +48,12 @@ export function useWebsiteNavItems(websiteId: string) {
           label: t(labels.events),
           icon: <Lightning />,
           path: renderPath('/events'),
+        },
+        {
+          id: 'web3',
+          label: 'Web3',
+          icon: <Wallet />,
+          path: renderPath('/web3'),
         },
         {
           id: 'sessions',

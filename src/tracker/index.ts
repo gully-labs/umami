@@ -1,3 +1,5 @@
+import { initWeb3, parseAddressMode } from './web3';
+
 /** Public types for the browser tracker. */
 export type TrackedProperties = {
   /**
@@ -251,6 +253,7 @@ type MetricEntry = PerformanceEntry & {
   const credentials = (config('fetch-credentials') || 'omit') as RequestCredentials;
   const perf = config('performance') === _true;
   const autoPageview = config('auto-pageview') !== _false;
+  const web3 = config('web3') === _true;
 
   const domains = domain.split(',').map(n => n.trim());
   const host =
@@ -647,6 +650,10 @@ type MetricEntry = PerformanceEntry & {
 
   if (distinctId) {
     void identify(distinctId);
+  }
+
+  if (web3) {
+    initWeb3(window, track, parseAddressMode(config('web3-address')));
   }
 
   if (autoTrack && !trackingDisabled()) {

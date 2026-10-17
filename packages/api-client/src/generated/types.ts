@@ -2789,6 +2789,23 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  '/api/websites/{websiteId}/web3': {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Get websites website id web3 */
+    get: operations['getWebsitesWebsiteIdWeb3'];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   '/api/websites/charts': {
     parameters: {
       query?: never;
@@ -22665,6 +22682,188 @@ export interface operations {
            *     }
            */
           'application/json': components['schemas']['ApiError'];
+        };
+      };
+    };
+  };
+  getWebsitesWebsiteIdWeb3: {
+    parameters: {
+      query?: {
+        /** @description Browser used by the visitor. */
+        browser?: string;
+        /** @description City of the visitor. */
+        city?: string;
+        /** @description ID of a saved cohort used to filter visitors. */
+        cohort?: string;
+        /** @description Comparison period: prev for the previous period or yoy for the same period last year. */
+        compare?: 'prev' | 'yoy';
+        /** @description Country code of the visitor. */
+        country?: string;
+        /** @description Device category used by the visitor. */
+        device?: string;
+        /** @description Custom identifier assigned to the visitor. */
+        distinctId?: string;
+        /** @description End of the date range as a Unix timestamp in milliseconds. */
+        endAt?: number;
+        /** @description End of the date range as an ISO 8601 date or date-time. */
+        endDate?: string;
+        /** @description Filter by custom event name. */
+        event?: string;
+        /** @description Event type: 1 for a pageview or 2 for a custom event. */
+        eventType?: number;
+        /** @description Set a non-empty value to exclude visits with only one pageview. */
+        excludeBounce?: string;
+        /** @description Hostname on which the activity occurred. */
+        hostname?: string;
+        /** @description Preferred language reported by the visitor browser. */
+        language?: string;
+        /** @description Whether records must match all filters or any filter. */
+        match?: 'all' | 'any';
+        /** @description Operating system used by the visitor. */
+        os?: string;
+        /** @description Filter by page URL path. */
+        path?: string;
+        /** @description Filter by page URL query string. */
+        query?: string;
+        /** @description Filter by referring URL. */
+        referrer?: string;
+        /** @description Region or subdivision of the visitor. */
+        region?: string;
+        /** @description ID of a saved segment used to filter results. */
+        segment?: string;
+        /** @description Start of the date range as a Unix timestamp in milliseconds. */
+        startAt?: number;
+        /** @description Start of the date range as an ISO 8601 date or date-time. */
+        startDate?: string;
+        /** @description Tag attached to the tracked activity. */
+        tag?: string;
+        /** @description IANA time zone used to interpret dates and group results, for example America/New_York. */
+        timezone?: string;
+        /** @description Filter by page title. */
+        title?: string;
+        /** @description Time interval used to group results: minute, hour, day, month, or year. */
+        unit?: string;
+        /** @description UTM campaign name. */
+        utmCampaign?: string;
+        /** @description UTM campaign content. */
+        utmContent?: string;
+        /** @description UTM campaign medium. */
+        utmMedium?: string;
+        /** @description UTM campaign source. */
+        utmSource?: string;
+        /** @description UTM campaign search term. */
+        utmTerm?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the website. */
+        websiteId: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description The operation completed successfully. */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json':
+            | {
+                /** @description Data returned by the operation. */
+                data: {
+                  chains: {
+                    chainId: string;
+                    connects: number;
+                    switches: number;
+                    transactions: number;
+                    wallets: number;
+                  }[];
+                  pages: {
+                    connects: number;
+                    path: string;
+                  }[];
+                  summary: {
+                    chainSwitches: number;
+                    connectedSessions: number;
+                    connects: number;
+                    disconnects: number;
+                    sessions: number;
+                    transactions: number;
+                    txSessions: number;
+                    wallets: number;
+                  };
+                  walletApps: {
+                    connects: number;
+                    sessions: number;
+                    wallet: string;
+                    wallets: number;
+                  }[];
+                };
+              }
+            | {
+                /** @description Error details returned when the operation fails. */
+                error: {
+                  code: string;
+                  /** @description Human-readable explanation of the result. */
+                  message: string;
+                  status: number;
+                };
+              };
+        };
+      };
+      /** @description Bad request. */
+      400: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "error": {
+           *         "code": "bad-request",
+           *         "message": "Bad request.",
+           *         "status": 400
+           *       }
+           *     }
+           */
+          'application/json': components['schemas']['ApiError'];
+        };
+      };
+      /** @description Unauthorized. */
+      401: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "error": {
+           *         "code": "unauthorized",
+           *         "message": "Unauthorized.",
+           *         "status": 401
+           *       }
+           *     }
+           */
+          'application/json': components['schemas']['ApiError'];
+        };
+      };
+      /** @description The operation completed successfully. */
+      501: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          'application/json': {
+            /** @description Error details returned when the operation fails. */
+            error: {
+              code: string;
+              /** @description Human-readable explanation of the result. */
+              message: string;
+              status: number;
+            };
+          };
         };
       };
     };
