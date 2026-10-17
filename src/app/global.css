@@ -1,5 +1,17 @@
+/* Gully Analytics theme: brand tokens (see src/lib/brand.ts). */
 :root {
-  --zen-font-family: var(--font-inter), sans-serif;
+  --gully-bg: #0b0e13;
+  --gully-surface: #10141a;
+  --gully-surface-2: #151a22;
+  --gully-line: #1d232c;
+  --gully-line-strong: #2a323d;
+  --gully-gold: #e8c060;
+  --gully-gold-deep: #9a7420;
+  --gully-ink: #eef0f2;
+  --gully-muted: #a6b0bd;
+  --zen-font-family: var(--font-body), "Hanken Grotesk", sans-serif;
+  --zen-font-family-mono: var(--font-mono), "IBM Plex Mono", monospace;
+  --gully-font-heading: var(--font-heading), "Barlow Condensed", sans-serif;
 }
 
 /* Preserve the brand accent when Zen applies its light or dark theme tokens. */
@@ -7,8 +19,50 @@
 [data-theme="light"],
 [data-theme="dark"],
 .dark {
-  --zen-primary: oklch(62.3% 0.214 259.815);
-  --zen-primary-fg: oklch(98.5% 0 0);
+  --zen-primary: var(--gully-gold);
+  --zen-primary-fg: var(--gully-bg);
+}
+
+[data-theme="light"] {
+  --zen-focus-ring: var(--gully-gold-deep);
+}
+
+/* Default (dark) Gully palette. */
+[data-theme="dark"],
+.dark {
+  --zen-surface: var(--gully-surface);
+  --zen-surface-raised: var(--gully-bg);
+  --zen-surface-sunken: var(--gully-surface-2);
+  --zen-surface-overlay: var(--gully-surface);
+  --zen-surface-inverted: var(--gully-ink);
+  --zen-surface-disabled: var(--gully-surface-2);
+  --zen-fg: var(--gully-ink);
+  --zen-fg-muted: var(--gully-muted);
+  --zen-fg-disabled: #6b7480;
+  --zen-border: var(--gully-line);
+  --zen-border-muted: var(--gully-line);
+  --zen-border-strong: var(--gully-line-strong);
+  --zen-interactive-bg: var(--gully-surface-2);
+  --zen-interactive-bg-hover: var(--gully-line);
+  --zen-interactive-bg-pressed: var(--gully-line-strong);
+  --zen-focus-ring: var(--gully-gold);
+  --zen-focus-offset: var(--gully-bg);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--gully-font-heading);
+  letter-spacing: 0.01em;
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--zen-font-family-mono);
 }
 
 /* Zen's rem-based typography and spacing assume the browser's default root size. */

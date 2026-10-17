@@ -7,6 +7,7 @@ import { Globe, Grid2x2, LayoutDashboard, LinkIcon } from '@/components/icons';
 import { MobileMenuButton } from '@/components/input/MobileMenuButton';
 import { UserButton } from '@/components/input/UserButton';
 import { Logo } from '@/components/svg';
+import { BRAND } from '@/lib/brand';
 import { AdminNav } from './admin/AdminNav';
 import { SettingsNav } from './settings/SettingsNav';
 
@@ -72,7 +73,7 @@ export function MobileNav() {
       </MobileMenuButton>
       <Row alignItems="center" justifyContent="center" flexGrow={1}>
         <IconLabel icon={<Logo />} style={{ width: 'auto' }}>
-          <Text weight="bold">umami</Text>
+          <Text weight="bold">{BRAND.name}</Text>
         </IconLabel>
       </Row>
     </Grid>

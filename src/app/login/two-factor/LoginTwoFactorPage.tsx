@@ -7,7 +7,6 @@ import {
   FormField,
   FormSubmitButton,
   Heading,
-  Icon,
   Text,
   TextField,
 } from '@umami/react-zen';
@@ -16,6 +15,7 @@ import { useEffect, useRef, useState } from 'react';
 import { OtpInput } from '@/components/common/OtpInput';
 import { useMessages, useTwoFactorVerifyMutation } from '@/components/hooks';
 import { Logo } from '@/components/svg';
+import { BRAND } from '@/lib/brand';
 import { setClientAuthToken } from '@/lib/client';
 import { consumeReturnUrl } from '@/lib/return-url';
 import { setUser } from '@/store/app';
@@ -89,10 +89,8 @@ export function LoginTwoFactorPage() {
 
   return (
     <Column justifyContent="center" alignItems="center" gap="6">
-      <Icon size="lg">
-        <Logo />
-      </Icon>
-      <Heading>umami</Heading>
+      <Logo width={64} height={64} />
+      <Heading>{BRAND.name}</Heading>
       <Column gap="4" style={{ minWidth: 300 }}>
         <Heading size="xl">{t(labels.twoFactorLogin)}</Heading>
         <Text>{t(messages.twoFactorLoginDescription)}</Text>

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
+import { BRAND } from '@/lib/brand';
 import { App } from './App';
 
 export default function ({ children }) {
@@ -12,7 +13,7 @@ export default function ({ children }) {
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Umami',
-    default: 'Umami',
+    template: `%s | ${BRAND.name}`,
+    default: BRAND.name,
   },
 };

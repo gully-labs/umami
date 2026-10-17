@@ -233,32 +233,32 @@ export const ROLE_PERMISSIONS = {
   [ROLES.teamViewOnly]: [],
 } as const;
 
+// Gully Analytics palette (gold accent on #0B0E13).
 export const THEME_COLORS = {
   light: {
-    primary: '#2680eb',
+    primary: '#c99a2e',
     text: '#838383',
     line: '#d9d9d9',
     fill: '#f9f9f9',
   },
   dark: {
-    primary: '#2680eb',
-    text: '#7b7b7b',
-    line: '#3a3a3a',
-    fill: '#191919',
+    primary: '#e8c060',
+    text: '#a6b0bd',
+    line: '#1d232c',
+    fill: '#10141a',
   },
 } as const;
 
 export const CHART_COLORS = [
+  '#e8c060',
   '#2680eb',
   '#9256d9',
   '#44b556',
   '#e68619',
   '#e34850',
-  '#f7bd12',
   '#01bad7',
   '#6734bc',
   '#89c541',
-  '#ffc301',
   '#ec1562',
   '#ffec16',
 ];

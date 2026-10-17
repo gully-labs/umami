@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { MobileNav } from '@/app/(main)/MobileNav';
 import { SideNav } from '@/app/(main)/SideNav';
 import { TopNav } from '@/app/(main)/TopNav';
+import { GullyFooter } from '@/components/common/GullyFooter';
 import {
   useConfig,
   useLoginQuery,
@@ -79,6 +80,7 @@ export function App({ children }) {
           style={needsTwoFactorSetup ? { pointerEvents: 'none' } : undefined}
         >
           {children}
+          <GullyFooter />
         </Column>
       </Column>
       {needsTwoFactorSetup && <TwoFactorSetupModal required={true} />}

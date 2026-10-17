@@ -21,7 +21,7 @@ describe('generateOtpAuthUri', () => {
     const uri = generateOtpAuthUri(secret, 'alice');
 
     expect(uri).toContain('otpauth://totp/');
-    expect(uri).toContain('issuer=Umami');
+    expect(uri).toMatch(/issuer=Gully(%20|\+)Analytics/);
     expect(uri).toContain('alice');
     expect(uri).toContain(`secret=${secret}`);
   });

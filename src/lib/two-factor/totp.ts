@@ -1,5 +1,6 @@
 import { generateSecret, generateURI, verify } from 'otplib';
 import qrcode from 'qrcode';
+import { BRAND } from '@/lib/brand';
 
 export function generateTotpSecret(): string {
   return generateSecret();
@@ -7,7 +8,7 @@ export function generateTotpSecret(): string {
 
 export function generateOtpAuthUri(secret: string, username: string): string {
   return generateURI({
-    issuer: 'Umami',
+    issuer: BRAND.name,
     label: username,
     secret,
   });

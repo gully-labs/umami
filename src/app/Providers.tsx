@@ -32,9 +32,19 @@ function MessagesProvider({ children }) {
   );
 }
 
+// Gully Analytics defaults to the dark theme until the user picks one (Zen stores it as "theme").
+function getPreferredTheme(): 'light' | 'dark' | undefined {
+  if (typeof window === 'undefined') return undefined;
+  try {
+    return window.localStorage.getItem('theme') ? undefined : 'dark';
+  } catch {
+    return 'dark';
+  }
+}
+
 export function Providers({ children }) {
   return (
-    <ZenProvider>
+    <ZenProvider theme={getPreferredTheme()}>
       <RouterProvider>
         <MessagesProvider>
           <QueryClientProvider client={client}>

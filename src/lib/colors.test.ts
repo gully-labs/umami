@@ -56,14 +56,14 @@ describe('getThemeColors', () => {
   test('builds a color structure for the light theme', () => {
     const result = getThemeColors('light');
 
-    expect(result.colors.theme).toMatchObject({ primary: '#2680eb' });
-    expect(result.colors.map.baseColor).toBe('#2680eb');
+    expect(result.colors.theme).toMatchObject({ primary: '#c99a2e' });
+    expect(result.colors.map.baseColor).toBe('#c99a2e');
     expect(result.colors.chart.views.backgroundColor).toContain('rgba');
     expect(result.colors.chart.text).toBeDefined();
   });
 
   test('builds a color structure for the dark theme', () => {
     const result = getThemeColors('dark');
-    expect(result.colors.theme).toMatchObject({ fill: '#191919' });
+    expect(result.colors.theme).toMatchObject({ fill: '#10141a', primary: '#e8c060' });
   });
 });

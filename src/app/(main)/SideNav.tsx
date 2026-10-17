@@ -26,6 +26,7 @@ import {
 } from '@/components/icons';
 import { UserButton } from '@/components/input/UserButton';
 import { Logo } from '@/components/svg';
+import { BRAND } from '@/lib/brand';
 
 export function SideNav(props: any) {
   const { t, labels } = useMessages();
@@ -99,7 +100,7 @@ export function SideNav(props: any) {
         >
           {!isCollapsed && (
             <IconLabel icon={<Logo />}>
-              <Text weight="bold">umami</Text>
+              <Text weight="bold">{BRAND.name}</Text>
             </IconLabel>
           )}
           <PanelButton />
