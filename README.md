@@ -1,3 +1,8 @@
+> **Gully Analytics** — this is Gully Labs' fork of Umami with Web3 tracking (wallets, chains,
+> transactions) for dapps. See [docs/gully/README.md](docs/gully/README.md) for the `data-web3`
+> tracker option, the event schema, the Web3 dashboard and Docker Compose self-hosting.
+> Umami is MIT licensed, Copyright (c) Umami Software, Inc.; Gully's changes are MIT too.
+
 <p align="center">
   <img src="https://content.umami.is/website/images/umami-logo.png" alt="Umami Logo" width="100">
 </p>

@@ -1,0 +1,57 @@
+# Gully Analytics production stack (app + PostgreSQL).
+#
+#   cp .env.gully.example .env.gully   # fill in the secrets
+#   docker compose -f docker-compose.gully.yml --env-file .env.gully up -d --build
+#
+# The app listens on 127.0.0.1:${GULLY_ANALYTICS_PORT:-3000}; put a TLS reverse proxy
+# (Caddy, nginx, Cloudflare Tunnel) in front of it for analytics.gullylabs.xyz.
+name: gully-analytics
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gully-analytics:latest
+    container_name: gully-analytics
+    ports:
+      - "127.0.0.1:${GULLY_ANALYTICS_PORT:-3000}:3000"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-gully}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-gully_analytics}
+      APP_SECRET: ${APP_SECRET:?set APP_SECRET (openssl rand -hex 32)}
+      TWO_FACTOR_ENCRYPTION_KEY: ${TWO_FACTOR_ENCRYPTION_KEY:?set TWO_FACTOR_ENCRYPTION_KEY (openssl rand -hex 32)}
+      # Upstream Umami phones home for telemetry and update checks; Gully Analytics turns both off.
+      DISABLE_TELEMETRY: "1"
+      DISABLE_UPDATES: "1"
+      # Optional: serve the tracker under a less blockable name, e.g. "ga.js".
+      TRACKER_SCRIPT_NAME: ${TRACKER_SCRIPT_NAME:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    init: true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/api/heartbeat || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  db:
+    image: postgres:16-alpine
+    container_name: gully-analytics-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gully_analytics}
+      POSTGRES_USER: ${POSTGRES_USER:-gully}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+    volumes:
+      - gully-analytics-db:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  gully-analytics-db:
