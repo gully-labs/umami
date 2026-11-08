@@ -13,7 +13,6 @@ export function GullyFooter() {
       paddingY="6"
       paddingX="3"
       width="100%"
-      direction="column"
     >
       <a href={BRAND.companyUrl} target="_blank" rel="noopener">
         {/* The Gully Labs kit badge, byte-identical (public/brand/powered-by-gully-labs.svg). */}
