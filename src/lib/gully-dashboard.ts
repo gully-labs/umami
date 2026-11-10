@@ -103,7 +103,11 @@ export function defaultDashboardParameters(websiteId: string): BoardParameters {
         id: uuid(),
         size: 25,
         columns: [
-          { id: uuid(), size: 50, component: widget('WebsiteMetricsBar', 'Metrics bar', websiteId) },
+          {
+            id: uuid(),
+            size: 50,
+            component: widget('WebsiteMetricsBar', 'Metrics bar', websiteId),
+          },
           { id: uuid(), size: 50, component: widget('WebsiteChart', 'Visitors chart', websiteId) },
         ],
       },
@@ -116,7 +120,11 @@ export function defaultDashboardParameters(websiteId: string): BoardParameters {
         id: uuid(),
         size: 25,
         columns: [
-          { id: uuid(), size: 100, component: widget('WeeklyTraffic', 'Weekly traffic', websiteId) },
+          {
+            id: uuid(),
+            size: 100,
+            component: widget('WeeklyTraffic', 'Weekly traffic', websiteId),
+          },
         ],
       },
     ],

@@ -6,7 +6,11 @@
   border: 1px solid var(--zen-border);
   border-radius: 16px;
   background:
-    radial-gradient(120% 80% at 100% 0%, color-mix(in oklab, var(--gully-blue) 18%, transparent), transparent 60%),
+    radial-gradient(
+      120% 80% at 100% 0%,
+      color-mix(in oklab, var(--gully-blue) 18%, transparent),
+      transparent 60%
+    ),
     var(--zen-surface);
 }
 
@@ -15,7 +19,7 @@
   border-top: 1px solid var(--zen-border);
 }
 
-.step[data-done='true'] .num {
+.step[data-done="true"] .num {
   background: var(--gully-blue-light);
   color: var(--gully-navy);
 }
@@ -58,17 +62,17 @@
   background: var(--zen-fg-disabled);
 }
 
-.status[data-state='waiting'] .dot {
+.status[data-state="waiting"] .dot {
   background: #f5b13d;
   animation: gully-pulse 1.4s ease-in-out infinite;
 }
 
-.status[data-state='live'] {
+.status[data-state="live"] {
   border-color: #22c55e;
   color: #22c55e;
 }
 
-.status[data-state='live'] .dot {
+.status[data-state="live"] .dot {
   background: #22c55e;
   box-shadow: 0 0 0 4px color-mix(in oklab, #22c55e 25%, transparent);
 }
@@ -97,7 +101,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .status[data-state='waiting'] .dot {
+  .status[data-state="waiting"] .dot {
     animation: none;
   }
 }

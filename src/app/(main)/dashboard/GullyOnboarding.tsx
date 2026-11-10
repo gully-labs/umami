@@ -1,9 +1,9 @@
 'use client';
-import { Button, Column, Heading, Row, Text, useToast } from '@umami/react-zen';
 import { useQuery } from '@tanstack/react-query';
+import { Button, Column, Heading, Row, Text, useToast } from '@umami/react-zen';
 import { useState } from 'react';
-import { WebsiteAddForm } from '@/app/(main)/websites/WebsiteAddForm';
 import { WebsiteTrackingCode } from '@/app/(main)/websites/[websiteId]/settings/WebsiteTrackingCode';
+import { WebsiteAddForm } from '@/app/(main)/websites/WebsiteAddForm';
 import { useApi, useModified } from '@/components/hooks';
 import { BRAND } from '@/lib/brand';
 import styles from './GullyOnboarding.module.css';
@@ -76,7 +76,11 @@ export function GullyOnboarding() {
           },
         }),
       });
-      toast(res.ok ? 'Test ping sent. Waiting for it to arrive.' : 'The test ping was refused. Try again in a minute.');
+      toast(
+        res.ok
+          ? 'Test ping sent. Waiting for it to arrive.'
+          : 'The test ping was refused. Try again in a minute.',
+      );
     } catch {
       toast('The test ping could not be sent. Check your connection.');
     } finally {

@@ -7,9 +7,9 @@ import { Empty } from '@/components/common/Empty';
 import { PageBody } from '@/components/common/PageBody';
 import { useBoard, useMessages, useNavigation, useUserWebsitesQuery } from '@/components/hooks';
 import { DashboardProvider } from './DashboardProvider';
+import { DashboardViewHeader } from './DashboardViewHeader';
 import { GullyOnboarding } from './GullyOnboarding';
 import { GullyWidgetSkeleton } from './GullyWidgetSkeleton';
-import { DashboardViewHeader } from './DashboardViewHeader';
 
 function DashboardContent() {
   const { board } = useBoard();

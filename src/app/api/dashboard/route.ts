@@ -85,7 +85,11 @@ export async function GET(request: Request) {
   );
 
   if (!board) {
-    return json(hasDashboardComponents(parameters) ? { type: 'dashboard', name: '', description: '', parameters } : null);
+    return json(
+      hasDashboardComponents(parameters)
+        ? { type: 'dashboard', name: '', description: '', parameters }
+        : null,
+    );
   }
 
   return json({ ...board, parameters });

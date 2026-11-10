@@ -18,18 +18,60 @@ const brokenDashboard = () => ({
       id: 'r1',
       size: 25,
       columns: [
-        { id: 'c1', size: 50, component: { type: 'WebsiteMetricsBar', title: 'Metrics bar', entityId: GONE, entityType: 'website' as const } },
-        { id: 'c2', size: 50, component: { type: 'WebsiteChart', title: 'Visitors chart', entityId: GONE, entityType: 'website' as const } },
+        {
+          id: 'c1',
+          size: 50,
+          component: {
+            type: 'WebsiteMetricsBar',
+            title: 'Metrics bar',
+            entityId: GONE,
+            entityType: 'website' as const,
+          },
+        },
+        {
+          id: 'c2',
+          size: 50,
+          component: {
+            type: 'WebsiteChart',
+            title: 'Visitors chart',
+            entityId: GONE,
+            entityType: 'website' as const,
+          },
+        },
       ],
     },
-    { id: 'r2', size: 25, columns: [{ id: 'c3', size: 100, component: { type: 'WorldMap', entityId: GONE, entityType: 'website' as const } }] },
-    { id: 'r3', size: 25, columns: [{ id: 'c4', size: 100, component: { type: 'Funnel', websiteId: GONE, props: { reportId: 'x', limit: 5 } } }] },
+    {
+      id: 'r2',
+      size: 25,
+      columns: [
+        {
+          id: 'c3',
+          size: 100,
+          component: { type: 'WorldMap', entityId: GONE, entityType: 'website' as const },
+        },
+      ],
+    },
+    {
+      id: 'r3',
+      size: 25,
+      columns: [
+        {
+          id: 'c4',
+          size: 100,
+          component: { type: 'Funnel', websiteId: GONE, props: { reportId: 'x', limit: 5 } },
+        },
+      ],
+    },
   ],
 });
 
 describe('repairDashboardParameters', () => {
   test('rebinds widgets the user cannot read to the user own website', () => {
-    const { parameters, rebound, cleared } = repairDashboardParameters(brokenDashboard(), () => false, MINE);
+    const { parameters, rebound, cleared } = repairDashboardParameters(
+      brokenDashboard(),
+      () => false,
+      MINE,
+    );
     expect(rebound).toBe(4);
     expect(cleared).toBe(0);
     const ids = dashboardEntityIds(parameters);
@@ -55,7 +97,19 @@ describe('repairDashboardParameters', () => {
   });
 
   test('clears pixel and link widgets that are gone instead of binding them to a website', () => {
-    const input = { rows: [{ id: 'r', columns: [{ id: 'c', component: { type: 'PixelChart', entityType: 'pixel' as const, entityId: GONE } }] }] };
+    const input = {
+      rows: [
+        {
+          id: 'r',
+          columns: [
+            {
+              id: 'c',
+              component: { type: 'PixelChart', entityType: 'pixel' as const, entityId: GONE },
+            },
+          ],
+        },
+      ],
+    };
     const { parameters, cleared } = repairDashboardParameters(input, () => false, MINE);
     expect(cleared).toBe(1);
     expect(parameters.rows[0].columns[0].component).toBeNull();

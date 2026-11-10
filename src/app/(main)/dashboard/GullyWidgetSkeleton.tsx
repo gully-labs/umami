@@ -1,9 +1,22 @@
 import styles from './GullyWidgetSkeleton.module.css';
 
 /** Placeholder blocks while widgets or the user's websites load, instead of a blank page. */
-export function GullyWidgetSkeleton({ rows = 2, inline = false }: { rows?: number; inline?: boolean }) {
+export function GullyWidgetSkeleton({
+  rows = 2,
+  inline = false,
+}: {
+  rows?: number;
+  inline?: boolean;
+}) {
   if (inline) {
-    return <div className={styles.block} data-test="gully-skeleton" aria-busy="true" aria-label="Loading" />;
+    return (
+      <div
+        className={styles.block}
+        data-test="gully-skeleton"
+        aria-busy="true"
+        aria-label="Loading"
+      />
+    );
   }
 
   return (
