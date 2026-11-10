@@ -1,4 +1,5 @@
 import { Column, Heading, Row, Text } from '@umami/react-zen';
+import { GullyWidgetSkeleton } from '@/app/(main)/dashboard/GullyWidgetSkeleton';
 import { Empty } from '@/components/common/Empty';
 import { Panel } from '@/components/common/Panel';
 import { useBoard } from '@/components/hooks';
@@ -46,6 +47,7 @@ export function BoardViewColumn({
       {description && <Text color="muted">{description}</Text>}
       <Column width="100%" height="100%" style={{ minHeight: 0 }}>
         <Column width="100%" flexGrow={1} style={{ minHeight: 0 }}>
+          {isLoading && <GullyWidgetSkeleton inline />}
           {!isLoading &&
             (isUnavailable ? (
               <Empty message="Selected item is no longer available." />

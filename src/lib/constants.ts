@@ -233,25 +233,25 @@ export const ROLE_PERMISSIONS = {
   [ROLES.teamViewOnly]: [],
 } as const;
 
-// Gully Analytics palette (gold accent on #0B0E13).
+// Gully Analytics palette: Gully Labs kit (light blue #6F8DDF on navy, blue #3754A0 on ground).
 export const THEME_COLORS = {
   light: {
-    primary: '#c99a2e',
+    primary: '#3754a0',
     text: '#838383',
     line: '#d9d9d9',
     fill: '#f9f9f9',
   },
   dark: {
-    primary: '#e8c060',
-    text: '#a6b0bd',
-    line: '#1d232c',
-    fill: '#10141a',
+    primary: '#6f8ddf',
+    text: '#a9b6d3',
+    line: '#1d3160',
+    fill: '#0e1c38',
   },
 } as const;
 
 export const CHART_COLORS = [
-  '#e8c060',
-  '#2680eb',
+  '#6f8ddf',
+  '#f5b13d',
   '#9256d9',
   '#44b556',
   '#e68619',
