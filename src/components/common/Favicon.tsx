@@ -31,7 +31,11 @@ export function Favicon({ domain, ...props }) {
     return <img src={src} width={16} height={16} alt="" {...props} />;
   }
 
-  const letter = domainName.replace(/^www\./, '').charAt(0).toUpperCase() || '?';
+  const letter =
+    domainName
+      .replace(/^www\./, '')
+      .charAt(0)
+      .toUpperCase() || '?';
 
   return (
     <span
