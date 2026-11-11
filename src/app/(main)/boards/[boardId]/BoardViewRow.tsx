@@ -1,6 +1,7 @@
 import { Box, Row } from '@umami/react-zen';
 import type { BoardColumn } from '@/lib/types';
 import { BoardViewColumn } from './BoardViewColumn';
+import styles from './BoardViewRow.module.css';
 import { MIN_COLUMN_WIDTH } from './boardConstants';
 
 export function BoardViewRow({
@@ -11,7 +12,8 @@ export function BoardViewRow({
   showEntityBadges?: boolean;
 }) {
   return (
-    <Row gap="3" width="100%" overflowX="auto">
+    // Gully: the row stacks its widgets on phones (BoardViewRow.module.css) instead of scrolling.
+    <Row gap="3" width="100%" overflowX="auto" className={styles.row}>
       {columns.map(column => (
         <Box
           key={column.id}

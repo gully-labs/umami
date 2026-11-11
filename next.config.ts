@@ -229,6 +229,8 @@ export default withNextIntl({
   },
   experimental: {
     useTypeScriptCli: true,
+    // Gully: cap build workers on small, memory-limited build boxes (NEXT_BUILD_CPUS=1).
+    ...(Number(process.env.NEXT_BUILD_CPUS) > 0 ? { cpus: Number(process.env.NEXT_BUILD_CPUS) } : {}),
   },
   async headers() {
     return headers;

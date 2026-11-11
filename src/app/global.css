@@ -1,14 +1,19 @@
-/* Gully Analytics theme: brand tokens (see src/lib/brand.ts). */
+/* Gully Analytics theme: Gully Labs kit colours (navy #0E1C38, blue #3754A0, light blue #6F8DDF,
+   ground #F1F3F8), see src/lib/brand.ts. */
 :root {
-  --gully-bg: #0b0e13;
-  --gully-surface: #10141a;
-  --gully-surface-2: #151a22;
-  --gully-line: #1d232c;
-  --gully-line-strong: #2a323d;
-  --gully-gold: #e8c060;
-  --gully-gold-deep: #9a7420;
-  --gully-ink: #eef0f2;
-  --gully-muted: #a6b0bd;
+  --gully-navy: #0e1c38;
+  --gully-blue: #3754a0;
+  --gully-blue-light: #6f8ddf;
+  --gully-ground: #f1f3f8;
+  --gully-bg: #091328;
+  --gully-surface: #0e1c38;
+  --gully-surface-2: #132548;
+  --gully-line: #1d3160;
+  --gully-line-strong: #2a427c;
+  --gully-accent: var(--gully-blue-light);
+  --gully-accent-deep: var(--gully-blue);
+  --gully-ink: #f1f3f8;
+  --gully-muted: #a9b6d3;
   --zen-font-family: var(--font-body), "Hanken Grotesk", sans-serif;
   --zen-font-family-mono: var(--font-mono), "IBM Plex Mono", monospace;
   --gully-font-heading: var(--font-heading), "Barlow Condensed", sans-serif;
@@ -19,12 +24,14 @@
 [data-theme="light"],
 [data-theme="dark"],
 .dark {
-  --zen-primary: var(--gully-gold);
-  --zen-primary-fg: var(--gully-bg);
+  --zen-primary: var(--gully-accent);
+  --zen-primary-fg: var(--gully-navy);
 }
 
 [data-theme="light"] {
-  --zen-focus-ring: var(--gully-gold-deep);
+  --zen-primary: var(--gully-blue);
+  --zen-primary-fg: #ffffff;
+  --zen-focus-ring: var(--gully-blue);
 }
 
 /* Default (dark) Gully palette. */
@@ -38,14 +45,14 @@
   --zen-surface-disabled: var(--gully-surface-2);
   --zen-fg: var(--gully-ink);
   --zen-fg-muted: var(--gully-muted);
-  --zen-fg-disabled: #6b7480;
+  --zen-fg-disabled: #6a7aa0;
   --zen-border: var(--gully-line);
   --zen-border-muted: var(--gully-line);
   --zen-border-strong: var(--gully-line-strong);
   --zen-interactive-bg: var(--gully-surface-2);
   --zen-interactive-bg-hover: var(--gully-line);
   --zen-interactive-bg-pressed: var(--gully-line-strong);
-  --zen-focus-ring: var(--gully-gold);
+  --zen-focus-ring: var(--gully-accent);
   --zen-focus-offset: var(--gully-bg);
 }
 

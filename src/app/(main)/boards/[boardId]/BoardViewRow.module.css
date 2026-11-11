@@ -1,0 +1,13 @@
+/* Gully: on phones a board row stacks its widgets full width instead of scrolling sideways. */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column !important;
+    overflow-x: visible !important;
+  }
+
+  .row > * {
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+    width: 100%;
+  }
+}
