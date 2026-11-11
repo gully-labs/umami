@@ -1,8 +1,8 @@
 import { Box, Row } from '@umami/react-zen';
 import type { BoardColumn } from '@/lib/types';
 import { BoardViewColumn } from './BoardViewColumn';
-import { MIN_COLUMN_WIDTH } from './boardConstants';
 import styles from './BoardViewRow.module.css';
+import { MIN_COLUMN_WIDTH } from './boardConstants';
 
 export function BoardViewRow({
   columns,
