@@ -45,6 +45,9 @@ ENV SKIP_BUILD_GEO=$SKIP_BUILD_GEO
 # Gully: optional cap on Next build workers (unset = Next's default).
 ARG NEXT_BUILD_CPUS
 ENV NEXT_BUILD_CPUS=$NEXT_BUILD_CPUS
+# Gully: optional Node options for the build only (e.g. --max-old-space-size=1792 on a 3 GB builder).
+ARG BUILD_NODE_OPTIONS
+ENV NODE_OPTIONS=$BUILD_NODE_OPTIONS
 
 RUN pnpm build:docker
 
