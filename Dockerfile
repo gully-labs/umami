@@ -42,6 +42,10 @@ ENV DATABASE_URL="postgresql://user:pass@localhost:5432/dummy"
 ARG SKIP_BUILD_GEO
 ENV SKIP_BUILD_GEO=$SKIP_BUILD_GEO
 
+# Gully: optional cap on Next build workers (unset = Next's default).
+ARG NEXT_BUILD_CPUS
+ENV NEXT_BUILD_CPUS=$NEXT_BUILD_CPUS
+
 RUN pnpm build:docker
 
 # Production image, copy all the files and run next
