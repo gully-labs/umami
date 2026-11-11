@@ -12,23 +12,43 @@ import type { Auth, BoardParameters } from '@/lib/types';
 import { canViewLink, canViewPixel, canViewWebsite, hasValidBoardReports } from '@/permissions';
 import { createBoard, getBoard, updateBoard } from '@/queries/prisma';
 
-/** The user's own first website, else the first one of a team the user manages. */
+/**
+ * The website to bind widgets to: of the user's own websites (else those of the user's teams), the
+ * one with the latest event in the last 7 days, else the oldest one.
+ */
 async function firstWebsiteId(userId: string): Promise<string | null> {
-  const own = await prisma.client.website.findFirst({
+  const select = { id: true } as const;
+  const orderBy = { createdAt: 'asc' } as const;
+  let sites = await prisma.client.website.findMany({
     where: { userId, deletedAt: null },
-    orderBy: { createdAt: 'asc' },
-    select: { id: true },
+    orderBy,
+    select,
+    take: 200,
   });
-  if (own) return own.id;
-  const team = await prisma.client.website.findFirst({
-    where: {
-      deletedAt: null,
-      team: { deletedAt: null, members: { some: { userId } } },
-    },
-    orderBy: { createdAt: 'asc' },
-    select: { id: true },
-  });
-  return team?.id ?? null;
+  if (!sites.length) {
+    sites = await prisma.client.website.findMany({
+      where: { deletedAt: null, team: { deletedAt: null, members: { some: { userId } } } },
+      orderBy,
+      select,
+      take: 200,
+    });
+  }
+  if (!sites.length) return null;
+  if (sites.length === 1) return sites[0].id;
+  try {
+    const recent = await prisma.client.websiteEvent.findFirst({
+      where: {
+        websiteId: { in: sites.map(s => s.id) },
+        createdAt: { gte: new Date(Date.now() - 7 * 86_400_000) },
+      },
+      orderBy: { createdAt: 'desc' },
+      select: { websiteId: true },
+    });
+    if (recent) return recent.websiteId;
+  } catch {
+    /* events unreadable (e.g. ClickHouse mode): keep the oldest website */
+  }
+  return sites[0].id;
 }
 
 /**
