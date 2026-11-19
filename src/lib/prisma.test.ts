@@ -184,3 +184,22 @@ describe('pagedRawQuery default ordering', () => {
     expect(queryRaw.mock.calls[1][0]).not.toMatch(/order by/);
   });
 });
+
+describe('raw query injection hardening', () => {
+  test('a filter with a non-word paramName is rejected before any SQL is built', () => {
+    expect(() =>
+      prisma.getFilterQuery({
+        path: { name: 'path', operator: 'c', value: 'a', paramName: 'x or 1=1 --' },
+      }),
+    ).toThrow();
+  });
+
+  test('rawQuery refuses SQL that still holds unbound placeholder braces', async () => {
+    const queryRaw = vi.mocked((prisma.client as any).$queryRawUnsafe);
+    queryRaw.mockClear();
+    await expect(
+      prisma.rawQuery('select 1 where a = {{ok}} or b = {{not a name}} --}}', { ok: 1 }),
+    ).rejects.toThrow();
+    expect(queryRaw).not.toHaveBeenCalled();
+  });
+});

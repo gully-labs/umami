@@ -3,7 +3,7 @@ import { formatInTimeZone } from 'date-fns-tz';
 import debug from 'debug';
 import { CLICKHOUSE } from '@/lib/db';
 import { DATA_TYPE, DEFAULT_PAGE_SIZE, FILTER_COLUMNS, OPERATORS } from './constants';
-import { filtersObjectToArray } from './params';
+import { filtersObjectToArray, InvalidFilterError, isSafeSqlName } from './params';
 import type { Operator, PropertyFilter, QueryFilters, QueryOptions } from './types';
 
 export const CLICKHOUSE_DATE_FORMATS = {
@@ -120,6 +120,11 @@ function mapFilter(
   paramName?: string,
 ) {
   const param = paramName ?? name;
+
+  if (!isSafeSqlName(param) || !isSafeSqlName(type) || !isSafeSqlName(name)) {
+    throw new InvalidFilterError('Invalid filter name');
+  }
+
   const value = `{${param}:${type}}`;
 
   switch (operator) {

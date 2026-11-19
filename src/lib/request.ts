@@ -6,6 +6,7 @@ import { getAllowedUnits, getMinimumUnit, maxDate, parseDateRange } from '@/lib/
 import { fetchAccount, fetchWebsite } from '@/lib/load';
 import {
   filtersArrayToObject,
+  hasUnsafeFilterNames,
   parseSessionPropertyFilters,
   parseUniversalEventPropertyFilters,
 } from '@/lib/params';
@@ -46,6 +47,10 @@ export async function parseRequest(
     } else {
       body = result.data;
     }
+  }
+
+  if (!error && (hasUnsafeFilterNames(query) || hasUnsafeFilterNames(body))) {
+    error = () => badRequest({ filters: 'Invalid filter name' });
   }
 
   if (!options?.skipAuth && !error) {
