@@ -3,7 +3,7 @@ import { readReplicas } from '@prisma/extension-read-replicas';
 import debug from 'debug';
 import { PrismaClient } from '@/generated/prisma/client';
 import { DATA_TYPE, DEFAULT_PAGE_SIZE, FILTER_COLUMNS, OPERATORS, SESSION_COLUMNS } from './constants';
-import { filtersObjectToArray } from './params';
+import { filtersObjectToArray, InvalidFilterError, isSafeSqlName } from './params';
 import type { Operator, PropertyFilter, QueryFilters, QueryOptions } from './types';
 
 const log = debug('umami:prisma');
@@ -140,6 +140,11 @@ function mapFilter(
   paramName?: string,
 ) {
   const param = paramName ?? name;
+
+  if (!isSafeSqlName(param) || (type && !isSafeSqlName(type)) || !isSafeSqlName(name)) {
+    throw new InvalidFilterError('Invalid filter name');
+  }
+
   const value = `{{${param}${type ? `::${type}` : ''}}}`;
 
   if (name.startsWith('cohort_')) {
@@ -733,6 +738,11 @@ async function executeRawQuery(
 
     return `$${params.length}${type ?? ''}`;
   });
+
+  // Every placeholder must have been bound above. Leftover braces mean text was spliced into the SQL.
+  if (query.includes('{{') || query.includes('}}')) {
+    throw new InvalidFilterError('Unbound placeholder in query');
+  }
 
   const queryClient = getRawQueryClient(client, {
     useReplica: !!process.env.DATABASE_REPLICA_URL,
