@@ -64,6 +64,54 @@ export function isSearchOperator(operator: any) {
   ].includes(operator);
 }
 
+/** Names that end up inside placeholders in SQL. Anything but word characters is refused. */
+const SAFE_SQL_NAME = /^\w+$/;
+
+export class InvalidFilterError extends Error {
+  status = 400;
+  constructor(message = 'Invalid filter') {
+    super(message);
+    this.name = 'InvalidFilterError';
+  }
+}
+
+export function isSafeSqlName(value: unknown): value is string {
+  return typeof value === 'string' && SAFE_SQL_NAME.test(value);
+}
+
+/**
+ * Finds a filter key, filter name or paramName that is not a plain word. Used by parseRequest to answer 400
+ * before a query is built; filtersObjectToArray repeats the check for filters that come from storage.
+ */
+export function hasUnsafeFilterNames(input: unknown, depth = 0): boolean {
+  if (!input || typeof input !== 'object' || depth > 6) {
+    return false;
+  }
+
+  for (const [key, val] of Object.entries(input as Record<string, any>)) {
+    if (key === 'paramName' && val !== undefined && val !== null && !isSafeSqlName(val)) {
+      return true;
+    }
+
+    if (key === 'filters' && val && typeof val === 'object' && !Array.isArray(val)) {
+      for (const [fKey, fVal] of Object.entries(val as Record<string, any>)) {
+        if (!isSafeSqlName(fKey)) {
+          return true;
+        }
+        if (fVal && typeof fVal === 'object' && 'name' in fVal && !isSafeSqlName(fVal.name)) {
+          return true;
+        }
+      }
+    }
+
+    if (val && typeof val === 'object' && hasUnsafeFilterNames(val, depth + 1)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export function filtersObjectToArray(filters: QueryFilters, options: QueryOptions = {}): Filter[] {
   if (!filters) {
     return [];
@@ -76,14 +124,29 @@ export function filtersObjectToArray(filters: QueryFilters, options: QueryOption
       return arr;
     }
 
+    if (!isSafeSqlName(key)) {
+      throw new InvalidFilterError('Invalid filter key');
+    }
+
     const baseName = key.replace(/\d+$/, '');
     const paramName = key !== baseName ? key : undefined;
 
     if (filter?.name && filter?.value !== undefined) {
+      const resolvedParam = paramName ?? filter.paramName;
+
+      if (
+        !isSafeSqlName(filter.name) ||
+        (resolvedParam !== undefined && resolvedParam !== null && !isSafeSqlName(resolvedParam))
+      ) {
+        throw new InvalidFilterError('Invalid filter name');
+      }
+
       return arr.concat({
         ...filter,
         column: options?.columns?.[baseName] ?? FILTER_COLUMNS[baseName],
-        paramName: paramName ?? filter.paramName,
+        paramName: resolvedParam,
+        // prefix is spliced into SQL: only ever the caller's, never from the request
+        prefix: options?.prefix,
       });
     }
 
